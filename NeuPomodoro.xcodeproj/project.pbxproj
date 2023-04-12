@@ -11,6 +11,11 @@
 		4F4DEF2129E4786E007B48BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4DEF2029E4786E007B48BD /* ContentView.swift */; };
 		4F4DEF2329E47870007B48BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F4DEF2229E47870007B48BD /* Assets.xcassets */; };
 		4F4DEF2729E47870007B48BD /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F4DEF2629E47870007B48BD /* Preview Assets.xcassets */; };
+		4F4DEF3529E4B4EE007B48BD /* NeuShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4DEF3429E4B4EE007B48BD /* NeuShape.swift */; };
+		4F4DEF3729E4B53C007B48BD /* NeuButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4DEF3629E4B53C007B48BD /* NeuButton.swift */; };
+		4F4DEF3929E4B56B007B48BD /* NeuExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4DEF3829E4B56B007B48BD /* NeuExtensions.swift */; };
+		4F4DEF3C29E4BD86007B48BD /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4DEF3B29E4BD86007B48BD /* CountdownTimer.swift */; };
+		4F537E4129E6585500D66410 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F537E4029E6585500D66410 /* Session.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +25,11 @@
 		4F4DEF2229E47870007B48BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F4DEF2429E47870007B48BD /* NeuPomodoro.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NeuPomodoro.entitlements; sourceTree = "<group>"; };
 		4F4DEF2629E47870007B48BD /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4F4DEF3429E4B4EE007B48BD /* NeuShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuShape.swift; sourceTree = "<group>"; };
+		4F4DEF3629E4B53C007B48BD /* NeuButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuButton.swift; sourceTree = "<group>"; };
+		4F4DEF3829E4B56B007B48BD /* NeuExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuExtensions.swift; sourceTree = "<group>"; };
+		4F4DEF3B29E4BD86007B48BD /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
+		4F537E4029E6585500D66410 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +62,9 @@
 		4F4DEF1D29E4786E007B48BD /* NeuPomodoro */ = {
 			isa = PBXGroup;
 			children = (
+				4F537E3F29E6584500D66410 /* Helpers */,
+				4F4DEF3A29E4BD6B007B48BD /* Views */,
+				4F4DEF3329E4B4C8007B48BD /* Neumorphic */,
 				4F4DEF1E29E4786E007B48BD /* NeuPomodoroApp.swift */,
 				4F4DEF2029E4786E007B48BD /* ContentView.swift */,
 				4F4DEF2229E47870007B48BD /* Assets.xcassets */,
@@ -67,6 +80,32 @@
 				4F4DEF2629E47870007B48BD /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		4F4DEF3329E4B4C8007B48BD /* Neumorphic */ = {
+			isa = PBXGroup;
+			children = (
+				4F4DEF3429E4B4EE007B48BD /* NeuShape.swift */,
+				4F4DEF3629E4B53C007B48BD /* NeuButton.swift */,
+				4F4DEF3829E4B56B007B48BD /* NeuExtensions.swift */,
+			);
+			path = Neumorphic;
+			sourceTree = "<group>";
+		};
+		4F4DEF3A29E4BD6B007B48BD /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4F4DEF3B29E4BD86007B48BD /* CountdownTimer.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4F537E3F29E6584500D66410 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				4F537E4029E6585500D66410 /* Session.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -85,6 +124,8 @@
 			dependencies = (
 			);
 			name = NeuPomodoro;
+			packageProductDependencies = (
+			);
 			productName = NeuPomodoro;
 			productReference = 4F4DEF1B29E4786E007B48BD /* NeuPomodoro.app */;
 			productType = "com.apple.product-type.application";
@@ -113,6 +154,8 @@
 				Base,
 			);
 			mainGroup = 4F4DEF1229E4786E007B48BD;
+			packageReferences = (
+			);
 			productRefGroup = 4F4DEF1C29E4786E007B48BD /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -139,8 +182,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F537E4129E6585500D66410 /* Session.swift in Sources */,
+				4F4DEF3929E4B56B007B48BD /* NeuExtensions.swift in Sources */,
+				4F4DEF3C29E4BD86007B48BD /* CountdownTimer.swift in Sources */,
 				4F4DEF2129E4786E007B48BD /* ContentView.swift in Sources */,
 				4F4DEF1F29E4786E007B48BD /* NeuPomodoroApp.swift in Sources */,
+				4F4DEF3729E4B53C007B48BD /* NeuButton.swift in Sources */,
+				4F4DEF3529E4B4EE007B48BD /* NeuShape.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+#if os(macOS)
+@main
+struct NeuPomodoroApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .frame(minWidth: 500, minHeight: 380)
+        }
+        .windowStyle(HiddenTitleBarWindowStyle())
+    }
+}
+#else
 @main
 struct NeuPomodoroApp: App {
     var body: some Scene {
@@ -15,3 +27,4 @@ struct NeuPomodoroApp: App {
         }
     }
 }
+#endif
