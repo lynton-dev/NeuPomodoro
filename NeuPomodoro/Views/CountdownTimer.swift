@@ -26,19 +26,30 @@ class CountdownTimer: ObservableObject {
     @AppStorage("longBreakLength") var longBreakLength = SessionDefaults.DEFAULT_LONG_BREAK_SECS
     @Published var counter: Int = SessionDefaults.DEFAULT_SESSION_LENGTH_SECS
     @Published var session = Session()
-    var timer = Timer()
-    private var running = false
+    @Published var running = false
+    private var timer = Timer()
+    private var prePausedMode = SessionMode.active
+    private var skipIt = false
     
     
     func start() {
         if (!running) {
+            if (self.session.mode == .none) {
+                self.session.mode = .active
+                self.session.updateSessionUI()
+            } else if (self.session.mode == .paused) {
+                self.session.mode = self.prePausedMode
+                self.session.updateSessionUI()
+            }
+            
             self.timer = Timer.scheduledTimer(withTimeInterval: 1.0,
                                               repeats: true) { _ in
                 // tick
                 self.counter -= 1
                 
-                if (self.counter <= 0) {
+                if (self.counter <= 0 || self.skipIt) {
                     // Countdown complete
+                    self.skipIt = false
                     self.pause()
                     
                     if (self.session.curSession == self.session.numSessions) {    // Reached our number of sessions limit -> long break
@@ -55,18 +66,48 @@ class CountdownTimer: ObservableObject {
             running = true
         }
     }
+    // To implement stop button? (Would start over completely)
+    func stop() {
+        reset()
+        self.session.curSession = 1
+        self.session.mode = .none
+    }
     func pause() {
         self.timer.invalidate()
         running = false
     }
+    func pauseClicked() {
+        pause()
+        self.prePausedMode = self.session.mode
+        self.session.mode = .paused
+        self.session.updateSessionUI()
+    }
     func reset() {
         pause()
         running = false
-        self.counter = sessionLength
+        var sessionMode = self.session.mode
+        if (self.session.mode == .paused) {
+            sessionMode = self.prePausedMode
+        }
+        switch sessionMode {
+        case .active:
+            self.counter = sessionLength
+        case .breakTime:
+            self.counter = breakLength
+        case .longBreak:
+            self.counter = longBreakLength
+        case .paused:
+            self.counter = sessionLength
+        case .none:
+            self.counter = sessionLength
+        }
     }
     func skip() {
         pause()
-        self.counter = 0
+        self.skipIt = true
+        if (self.session.mode == .paused) {
+            self.session.mode = self.prePausedMode
+        }
         start()
     }
     func nextSession() {
@@ -74,20 +115,20 @@ class CountdownTimer: ObservableObject {
         self.session.mode = .active
         self.session.curSession += 1
         start()
-        session.updateSessionUI()
+        self.session.updateSessionUI()
     }
     func startBreak() {
         self.counter = breakLength
         self.session.mode = .breakTime
         start()
-        session.updateSessionUI()
+        self.session.updateSessionUI()
     }
     func startLongBreak() {
         self.counter = longBreakLength
         self.session.mode = .longBreak
         self.session.curSession = 0
         start()
-        session.updateSessionUI()
+        self.session.updateSessionUI()
     }
     func isRunning() -> Bool {
         return running
