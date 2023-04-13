@@ -48,8 +48,7 @@ struct ContentView: View {
                 CountdownTimerView(countdownTimer: countdownTimer)
                 
                 SessionProgressView(value: countdownTimer.session.curSession, maximum: numSessions, countdownTimer: countdownTimer)
-                    .animation(.default, value: countdownTimer.session.curSession)
-                    .frame(width: 150, height: 5)
+                    .frame(width: 200, height: 5)
                     .padding(EdgeInsets(top: -30, leading: 0, bottom: 40, trailing: 0))
                 
                 HStack {

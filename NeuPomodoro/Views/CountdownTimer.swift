@@ -28,6 +28,7 @@ class CountdownTimer: ObservableObject {
     @Published var counter: Int = SessionDefaults.DEFAULT_SESSION_LENGTH_SECS
     @Published var session = Session()
     @Published var running = false
+    @Published var curTimerLength = SessionDefaults.DEFAULT_SESSION_LENGTH_SECS
     private var timer = Timer()
     private var prePausedMode = SessionMode.active
     private var skipIt = false
@@ -153,6 +154,7 @@ class CountdownTimer: ObservableObject {
     }
     func nextSession() {
         self.counter = sessionLength
+        self.curTimerLength = sessionLength
         self.session.mode = .active
         self.session.curSession += 1
         start()
@@ -161,6 +163,7 @@ class CountdownTimer: ObservableObject {
     }
     func startBreak() {
         self.counter = breakLength
+        self.curTimerLength = breakLength
         self.session.mode = .breakTime
         start()
         self.session.updateSessionUI()
@@ -168,6 +171,7 @@ class CountdownTimer: ObservableObject {
     }
     func startLongBreak() {
         self.counter = longBreakLength
+        self.curTimerLength = longBreakLength
         self.session.mode = .longBreak
         self.session.curSession = 0
         start()
