@@ -21,10 +21,10 @@ struct CountdownTimerView: View {
 }
 
 class CountdownTimer: ObservableObject {
-    @AppStorage("counterInitial") var sessionLength = 25 * 60
-    @AppStorage("breakLength") var breakLength = 5 * 60
-    @AppStorage("longBreakLength") var longBreakLength = 15 * 60
-    @Published var counter: Int = 25 * 60
+    @AppStorage("sessionLength") var sessionLength = SessionDefaults.DEFAULT_SESSION_LENGTH_SECS
+    @AppStorage("breakLength") var breakLength = SessionDefaults.DEFAULT_BREAK_SECS
+    @AppStorage("longBreakLength") var longBreakLength = SessionDefaults.DEFAULT_LONG_BREAK_SECS
+    @Published var counter: Int = SessionDefaults.DEFAULT_SESSION_LENGTH_SECS
     @Published var session = Session()
     var timer = Timer()
     private var running = false
@@ -65,7 +65,9 @@ class CountdownTimer: ObservableObject {
         self.counter = sessionLength
     }
     func skip() {
+        pause()
         self.counter = 0
+        start()
     }
     func nextSession() {
         self.counter = sessionLength

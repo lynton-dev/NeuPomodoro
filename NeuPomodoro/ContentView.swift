@@ -11,6 +11,7 @@ struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var countdownTimer = CountdownTimer()
     @State var timerRunning = false
+    @AppStorage("numSessions") var numSessions = SessionDefaults.DEFAULT_NUM_SESSIONS
     
     var body: some View {
         ZStack {
@@ -39,7 +40,12 @@ struct ContentView: View {
                 .padding(EdgeInsets(top: 80, leading: 20, bottom: 0, trailing: 20))
                 
                 CountdownTimerView(countdownTimer: countdownTimer)
-                    .padding(.bottom, 35)
+                
+                SessionProgressView(value: countdownTimer.session.curSession, maximum: numSessions, countdownTimer: countdownTimer)
+                    .animation(.default, value: countdownTimer.session.curSession)
+                    .frame(width: 150, height: 5)
+                    .padding(EdgeInsets(top: -30, leading: 0, bottom: 35, trailing: 0))
+                
                 
                 HStack {
                     NeuButton(imageName: self.timerRunning ? "pause.fill" : "play.fill", shape: AnyShape(Circle()), width: 30, height: 30) {

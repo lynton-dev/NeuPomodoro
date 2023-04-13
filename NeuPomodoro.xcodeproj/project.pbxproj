@@ -16,6 +16,7 @@
 		4F4DEF3929E4B56B007B48BD /* NeuExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4DEF3829E4B56B007B48BD /* NeuExtensions.swift */; };
 		4F4DEF3C29E4BD86007B48BD /* CountdownTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4DEF3B29E4BD86007B48BD /* CountdownTimer.swift */; };
 		4F537E4129E6585500D66410 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F537E4029E6585500D66410 /* Session.swift */; };
+		4F537E4329E770E600D66410 /* SessionProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F537E4229E770E600D66410 /* SessionProgressView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		4F4DEF3829E4B56B007B48BD /* NeuExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuExtensions.swift; sourceTree = "<group>"; };
 		4F4DEF3B29E4BD86007B48BD /* CountdownTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimer.swift; sourceTree = "<group>"; };
 		4F537E4029E6585500D66410 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		4F537E4229E770E600D66410 /* SessionProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionProgressView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				4F4DEF3B29E4BD86007B48BD /* CountdownTimer.swift */,
+				4F537E4229E770E600D66410 /* SessionProgressView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4F537E4329E770E600D66410 /* SessionProgressView.swift in Sources */,
 				4F537E4129E6585500D66410 /* Session.swift in Sources */,
 				4F4DEF3929E4B56B007B48BD /* NeuExtensions.swift in Sources */,
 				4F4DEF3C29E4BD86007B48BD /* CountdownTimer.swift in Sources */,

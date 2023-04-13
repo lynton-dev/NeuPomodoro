@@ -11,15 +11,22 @@ enum SessionMode {
     case active, breakTime, longBreak
 }
 
+struct SessionDefaults {
+    static let DEFAULT_NUM_SESSIONS = 4
+    static let DEFAULT_BREAK_SECS = 5 * 60          // 5 mins
+    static let DEFAULT_LONG_BREAK_SECS = 15 * 60    // 15 mins
+    static let DEFAULT_SESSION_LENGTH_SECS = 25 * 60       // 25 mins
+}
+
 class Session {
     @Published var mode = SessionMode.active
     @Published var text = "Active"
     @Published var image = Image(systemName: "bolt.circle.fill")
     @Published var color = Color.pink
+    @AppStorage("numSessions") var numSessions = SessionDefaults.DEFAULT_NUM_SESSIONS
+    @AppStorage("breakLength") var breakLength = SessionDefaults.DEFAULT_BREAK_SECS
+    @AppStorage("longBreakLength") var longBreakLength = SessionDefaults.DEFAULT_LONG_BREAK_SECS
     var curSession = 1
-    @AppStorage("numSessions") var numSessions = 4
-    @AppStorage("breakLength") var breakLength = 5 * 60
-    @AppStorage("longBreakLength") var longBreakLength = 15 * 60
     
     func updateSessionUI() {
         updateSessionText()
