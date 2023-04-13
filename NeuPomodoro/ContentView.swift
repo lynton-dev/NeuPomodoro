@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -85,6 +86,15 @@ struct ContentView: View {
                 .padding(.bottom, 50)
             }
             .padding()
+        }
+        .onAppear() {
+            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+                if granted {
+                    
+                } else if let error = error {
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
 }

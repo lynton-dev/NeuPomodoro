@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UserNotifications
 
 struct CountdownTimerView: View {
     @ObservedObject var countdownTimer: CountdownTimer
@@ -66,6 +67,46 @@ class CountdownTimer: ObservableObject {
             running = true
         }
     }
+    func notify() {
+        let content = UNMutableNotificationContent()
+        var doNotify = true
+        
+        switch self.session.mode {
+        case .active:
+            content.title = "Start next session"
+            content.subtitle = "Break is over!"
+        case .breakTime:
+            content.title = "Break started"
+            content.subtitle = "Take a breather"
+        case .longBreak:
+            content.title = "Long break started"
+            content.subtitle = "You've earned it!"
+        case .paused:
+            doNotify = false
+        case .none:
+            doNotify = false
+        }
+        
+        if (doNotify) {
+            content.sound = UNNotificationSound.default
+            
+            // show this notification 1 seconds from now
+            let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
+            
+            // choose a random identifier
+            //let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+            
+            // I am instead using a hardcoded identifier so that each new notification replaces the last (no stacking notifications)
+            let request = UNNotificationRequest(identifier: "NeuPomodoro", content: content, trigger: trigger)
+            
+            // add our notification request
+            UNUserNotificationCenter.current().add(request) { (error) in
+                if error != nil {
+                    print("Error adding notification")
+                }
+            }
+        }
+    }
     // To implement stop button? (Would start over completely)
     func stop() {
         reset()
@@ -116,12 +157,14 @@ class CountdownTimer: ObservableObject {
         self.session.curSession += 1
         start()
         self.session.updateSessionUI()
+        notify()
     }
     func startBreak() {
         self.counter = breakLength
         self.session.mode = .breakTime
         start()
         self.session.updateSessionUI()
+        notify()
     }
     func startLongBreak() {
         self.counter = longBreakLength
@@ -129,6 +172,7 @@ class CountdownTimer: ObservableObject {
         self.session.curSession = 0
         start()
         self.session.updateSessionUI()
+        notify()
     }
     func isRunning() -> Bool {
         return running
