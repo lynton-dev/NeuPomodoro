@@ -48,7 +48,7 @@ struct ContentView: View {
                 CountdownTimerView(countdownTimer: countdownTimer)
                 
                 SessionProgressView(value: countdownTimer.session.curSession, maximum: numSessions, countdownTimer: countdownTimer)
-                    .frame(width: 200, height: 5)
+                    .frame(width: 200)
                     .padding(EdgeInsets(top: -30, leading: 0, bottom: 40, trailing: 0))
                 
                 HStack {
@@ -87,6 +87,7 @@ struct ContentView: View {
             .padding()
         }
         .onAppear() {
+            // Request notification permission
             UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
                 if granted {
                     

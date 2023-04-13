@@ -23,19 +23,21 @@ struct SessionProgressView: View {
         HStack(alignment: .center, spacing: spacing) {
             ForEach(1 ..< barValue, id: \.self) { index in
                 Rectangle()
-                    .foregroundColor(Color.green.opacity(0.7))
+                    .foregroundColor(Color(NSColor.textColor).opacity(0.8))
                     .clipShape(Capsule())
+                    .frame(width: width)
             }
             
             ProgressView("", value: CGFloat(self.countdownTimer.curTimerLength - self.countdownTimer.counter), total: CGFloat(self.countdownTimer.curTimerLength))
                 .tint(self.countdownTimer.session.color)
-                .frame(width: progressWidth)
+                .frame(minWidth: progressWidth)
                 .padding(.top, -14)
             
             ForEach(barValue ..< maximum, id: \.self) { index in
                 Rectangle()
                     .foregroundColor(self.unselectedColor)
                     .clipShape(Capsule())
+                    .frame(width: width)
             }
         }
         .animation(.easeInOut(duration: 0.5), value: barValue)
