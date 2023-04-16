@@ -10,8 +10,10 @@ import SwiftUI
 struct NeuButton: View {
     let imageName: String
     let shape: AnyShape
-    var width = 30.0
-    var height = 30.0
+    let width: CGFloat
+    let height: CGFloat
+    let imageWidth: CGFloat
+    let imageHeight: CGFloat
     let action: () -> Void
     @State private var isPressed = false
     @State private var offset: CGFloat = 0.0
@@ -21,7 +23,7 @@ struct NeuButton: View {
             Image(systemName: imageName)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: min(self.width, 15), height: min(self.height, 15))    // Setting a limit on how big the button image can be.
+                        .frame(width: self.imageWidth, height: self.imageHeight)
                         .offset(x: offset, y: offset)
         }
         .modifier(PressActions(onPress: {

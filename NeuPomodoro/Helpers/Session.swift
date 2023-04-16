@@ -73,7 +73,7 @@ class Session {
         case .longBreak:
             self.color = Color.indigo
         case .paused:
-            self.color = Color.yellow.opacity(0.5)
+            self.color = Color.yellow.opacity(0.8)
         case .none:
             self.color = Color.gray
         }
