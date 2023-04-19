@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-#if os(iOS)
 enum AppIcon: String, CaseIterable, Identifiable {
     case primary = "AppIcon"
-    case darkMode = "AppIconiOSDark"
+    case darkMode = "AppIconDark"
 
     var id: String { rawValue }
     var iconName: String? {
@@ -33,9 +32,10 @@ enum AppIcon: String, CaseIterable, Identifiable {
     }
 }
 
+#if os(iOS)
 final class ChangeAppIconViewModel: ObservableObject {
     @Published private(set) var selectedAppIcon: AppIcon
-
+    
     init() {
         if let iconName = UIApplication.shared.alternateIconName, let appIcon = AppIcon(rawValue: iconName) {
             selectedAppIcon = appIcon
@@ -43,8 +43,9 @@ final class ChangeAppIconViewModel: ObservableObject {
             selectedAppIcon = .primary
         }
     }
+    
 
-    func updateAppIcon(to icon: AppIcon) {
+    private func updateAppIcon(to icon: AppIcon) {
         let previousAppIcon = selectedAppIcon
         selectedAppIcon = icon
 
@@ -67,5 +68,23 @@ final class ChangeAppIconViewModel: ObservableObject {
         }
     }
 }
-
 #endif
+
+func updateAppIconPreference() {
+    @Environment(\.colorScheme) var colorScheme
+    @AppStorage("useDarkModeIcon") var useDarkModeIcon = true
+    @AppStorage("themeIndex") var themeIndex = Themes.system.index
+    
+    let themeSetting = Themes.allCases[themeIndex]
+    var appIcon = AppIcon.primary
+    
+    if ((themeSetting == .system && useDarkModeIcon) || (themeSetting == .dark && useDarkModeIcon)) {
+        appIcon = AppIcon.darkMode
+    }
+    
+    #if os(macOS)
+    NSApplication.shared.applicationIconImage = NSImage(named: (appIcon.iconName ?? AppIcon.primary.iconName) ?? "AppIcon")
+    #else
+    ChangeAppIconViewModel().updateAppIcon(to: appIcon.iconName ?? AppIcon.primary.iconName)
+    #endif
+}

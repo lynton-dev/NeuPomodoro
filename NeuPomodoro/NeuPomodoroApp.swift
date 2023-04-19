@@ -13,18 +13,39 @@ struct NeuPomodoroApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                //.presentedWindowToolbarStyle(.unified(showsTitle: true))
                 .frame(minWidth: 500, minHeight: 400)
         }
-        .windowStyle(HiddenTitleBarWindowStyle())
+        //.windowToolbarStyle(.unifiedCompact(showsTitle: true))
+        //.windowStyle(HiddenTitleBarWindowStyle())
     }
 }
+
 #else
+
 @main
 struct NeuPomodoroApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .toolbarBackground(.hidden, for: .navigationBar)
         }
     }
 }
+
+//extension UINavigationBar {
+//    static func changeAppearance(clear: Bool) {
+//        let appearance = UINavigationBarAppearance()
+//
+//        if clear {
+//            appearance.configureWithTransparentBackground()
+//        } else {
+//            appearance.configureWithDefaultBackground()
+//        }
+//
+//        UINavigationBar.appearance().standardAppearance = appearance
+//        UINavigationBar.appearance().compactAppearance = appearance
+//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+//    }
+//}
 #endif

@@ -12,31 +12,28 @@ struct ContentView: View {
     @Environment(\.colorScheme) var colorScheme
     @ObservedObject var countdownTimer = CountdownTimer()
     @AppStorage("numSessions") var numSessions = SessionDefaults.DEFAULT_NUM_SESSIONS
+    @AppStorage("themeIndex") var themeIndex = Themes.system.index
     @State var timerState = ProgressState.none
-
+    @State private var isShowingSettingsView = false
+    
     var body: some View {
-        ZStack {
-            Color("Background")
-                .ignoresSafeArea()
-            
+        NavigationStack {
             VStack {
-//                #if os(iOS)
-//                Button(action: {
-//                    ChangeAppIconViewModel().updateAppIcon(to: .darkMode)
-//                }){
-//                    Image(uiImage: UIImage(named: "AppIconiOSDark") ?? UIImage())
-//                        .cornerRadius(20)
-//                }
-//                #else
-//                Button(action: {
-//                    NSApplication.shared.applicationIconImage = NSImage(named: "AppIconDark")
-//                }){
-//                    Image(nsImage: NSImage(named: "AppIconDark") ?? NSImage())
-//                        .cornerRadius(20)
-//                }
-//                #endif
-                
-                Spacer()
+                //                #if os(iOS)
+                //                Button(action: {
+                //                    ChangeAppIconViewModel().updateAppIcon(to: .darkMode)
+                //                }){
+                //                    Image(uiImage: UIImage(named: "AppIconiOSDark") ?? UIImage())
+                //                        .cornerRadius(20)
+                //                }
+                //                #else
+                //                Button(action: {
+                //                    NSApplication.shared.applicationIconImage = NSImage(named: "AppIconDark")
+                //                }){
+                //                    Image(nsImage: NSImage(named: "AppIconDark") ?? NSImage())
+                //                        .cornerRadius(20)
+                //                }
+                //                #endif
                 
                 // Session indicator
                 ZStack {
@@ -74,6 +71,8 @@ struct ContentView: View {
                 Spacer()
                 
                 VStack {
+                    Spacer()
+                    
                     HStack {
                         NeuButton(imageName: self.countdownTimer.running ? "pause.fill" : "play.fill", shape: AnyShape(Circle()), width: 30, height: 30, imageWidth: 20, imageHeight: 20) {
                             // action
@@ -108,30 +107,59 @@ struct ContentView: View {
                     }
                     .padding(EdgeInsets(top: 30, leading: 0, bottom: 40, trailing: 0))
                     
-                    SessionProgressView(value: countdownTimer.session.curSession, progressState: $timerState, maximum: numSessions, countdownTimer: countdownTimer)
-                    .padding(.bottom, 5)
+                    Spacer()
+                    
+                    ZStack {
+                        NeuShape(isHighlighted: true, shape: Rectangle())
+                        
+                        SessionProgressView(value: countdownTimer.session.curSession, progressState: $timerState, maximum: numSessions, countdownTimer: countdownTimer)
+                            .padding(.bottom, 5)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: 40)
+                    .padding(EdgeInsets(top: 0, leading: -30, bottom: -20, trailing: -30))
                 }
             }
             .padding()
             .frame(maxHeight: .infinity, alignment: .bottom)    // align to the bottom
-        }
-        .onAppear() {
-            // Request notification permission
-            UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
-                if granted {
-                    
-                } else if let error = error {
-                    print(error.localizedDescription)
+            .opacity(self.isShowingSettingsView ? 0 : 1)
+            .animation(.easeInOut, value: self.isShowingSettingsView)            
+            .toolbar {
+                ToolbarItemGroup(placement: .primaryAction) {
+                    NavigationLink(destination:
+                            SettingsView(countdownTimer: countdownTimer)
+                                .opacity(self.isShowingSettingsView ? 1 : 0)
+                                .animation(.easeInOut, value: self.isShowingSettingsView)
+                                .onAppear() {
+                                    self.isShowingSettingsView = true
+                                }
+                                .onDisappear() {
+                                    self.isShowingSettingsView = false
+                                }
+                        
+                    ) {
+                        Image(systemName: "switch.2")
+                    }
+                    .disabled(self.isShowingSettingsView)
                 }
             }
-            
-            // Update icon based on system dark mode
-            #if os(macOS)
-            //NSApplication.shared.applicationIconImage = NSImage(named: "AppIconDark")
-            #else
-            ChangeAppIconViewModel().updateAppIcon(to: .darkMode)
-            #endif
+            .onAppear() {
+                // Request notification permission
+                UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+                    if granted {
+                        
+                    } else if let error = error {
+                        print(error.localizedDescription)
+                    }
+                }
+                
+                // Update icon based on system dark mode
+                updateAppIconPreference()
+            }
         }
+        .navigationTitle("")
+        .toolbarBackground(.clear)
+        .background(Color("Background"))
+        .preferredColorScheme(themeIndex == 1 ? .light : themeIndex == 2 ? .dark : nil)
     }
 }
 

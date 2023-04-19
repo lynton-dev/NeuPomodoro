@@ -24,13 +24,13 @@ struct SessionProgressView: View {
     @ObservedObject var countdownTimer: CountdownTimer
 
     var body: some View {
-        let barValue = (value == 0 ? maximum : value)  // Make the bar full if we are in a long break (i.e. when value = 0)
+        let barNumber = (value == 0 ? maximum : value)  // Make the bar full if we are in a long break (i.e. when value = 0)
         
         VStack {
             Spacer()
             
             HStack(alignment: .center, spacing: spacing) {
-                ForEach(1 ..< barValue, id: \.self) { index in
+                ForEach(1 ..< barNumber, id: \.self) { index in
                     Rectangle()
                         .foregroundColor(Color.pink.opacity(0.75))
                         .clipShape(Capsule())
@@ -42,14 +42,14 @@ struct SessionProgressView: View {
                     .frame(height: progressState == .started ? progressHeight : height, alignment: .center)
                     .progressViewStyle(CustomProgressBarStyle(color: self.countdownTimer.session.color, width: progressState != .none ? progressWidth : width, height: progressState == .started ? progressHeight : height))
                 
-                ForEach(barValue ..< maximum, id: \.self) { index in
+                ForEach(barNumber ..< maximum, id: \.self) { index in
                     Rectangle()
                         .foregroundColor(self.unselectedColor)
                         .clipShape(Capsule())
                         .frame(width: width, height: height)
                 }
             }
-            .animation(.spring(), value: barValue)
+            .animation(.spring(), value: barNumber)
             .animation(.spring(), value: progressState)
             
             Spacer()
@@ -73,7 +73,7 @@ struct CustomProgressBarStyle: ProgressViewStyle {
                 
                 Rectangle()
                     .foregroundColor(color)
-                    .frame(width: min(CGFloat(configuration.fractionCompleted!) * width, width), height: height)
+                    .frame(width: min(CGFloat(configuration.fractionCompleted ?? 0.0) * width, width), height: height)
             }
             .clipShape(Capsule())
             .animation(.easeIn(duration: 0.35), value: color)    // default animation duration in SwiftUI is 0.35 sec.

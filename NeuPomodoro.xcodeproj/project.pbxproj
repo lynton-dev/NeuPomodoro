@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4F388CD029E9CC6A00D66D2E /* AppIconHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F388CCF29E9CC6A00D66D2E /* AppIconHelper.swift */; };
+		4F388CD229ECA49300D66D2E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F388CD129ECA49300D66D2E /* SettingsView.swift */; };
+		4F388CDC29EE57C300D66D2E /* MacSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F388CDB29EE57C300D66D2E /* MacSettings.swift */; };
 		4F4DEF1F29E4786E007B48BD /* NeuPomodoroApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4DEF1E29E4786E007B48BD /* NeuPomodoroApp.swift */; };
 		4F4DEF2129E4786E007B48BD /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F4DEF2029E4786E007B48BD /* ContentView.swift */; };
 		4F4DEF2329E47870007B48BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F4DEF2229E47870007B48BD /* Assets.xcassets */; };
@@ -22,6 +24,8 @@
 
 /* Begin PBXFileReference section */
 		4F388CCF29E9CC6A00D66D2E /* AppIconHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIconHelper.swift; sourceTree = "<group>"; };
+		4F388CD129ECA49300D66D2E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		4F388CDB29EE57C300D66D2E /* MacSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacSettings.swift; sourceTree = "<group>"; };
 		4F4DEF1B29E4786E007B48BD /* NeuPomodoro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeuPomodoro.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F4DEF1E29E4786E007B48BD /* NeuPomodoroApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NeuPomodoroApp.swift; sourceTree = "<group>"; };
 		4F4DEF2029E4786E007B48BD /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -101,6 +105,7 @@
 			children = (
 				4F4DEF3B29E4BD86007B48BD /* CountdownTimer.swift */,
 				4F537E4229E770E600D66410 /* SessionProgressView.swift */,
+				4F388CD129ECA49300D66D2E /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -110,6 +115,7 @@
 			children = (
 				4F388CCF29E9CC6A00D66D2E /* AppIconHelper.swift */,
 				4F537E4029E6585500D66410 /* Session.swift */,
+				4F388CDB29EE57C300D66D2E /* MacSettings.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -193,10 +199,12 @@
 				4F4DEF3929E4B56B007B48BD /* NeuExtensions.swift in Sources */,
 				4F388CD029E9CC6A00D66D2E /* AppIconHelper.swift in Sources */,
 				4F4DEF3C29E4BD86007B48BD /* CountdownTimer.swift in Sources */,
+				4F388CD229ECA49300D66D2E /* SettingsView.swift in Sources */,
 				4F4DEF2129E4786E007B48BD /* ContentView.swift in Sources */,
 				4F4DEF1F29E4786E007B48BD /* NeuPomodoroApp.swift in Sources */,
 				4F4DEF3729E4B53C007B48BD /* NeuButton.swift in Sources */,
 				4F4DEF3529E4B4EE007B48BD /* NeuShape.swift in Sources */,
+				4F388CDC29EE57C300D66D2E /* MacSettings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +261,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -305,6 +315,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;

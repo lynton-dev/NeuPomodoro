@@ -33,6 +33,9 @@ class CountdownTimer: ObservableObject {
     private var prePausedMode = SessionMode.active
     private var skipIt = false
     
+    init() {
+        counter = sessionLength
+    }    
     
     func start() {
         if (!running) {
@@ -133,15 +136,33 @@ class CountdownTimer: ObservableObject {
         }
         switch sessionMode {
         case .active:
-            self.counter = sessionLength
+            resetSessionLength()
         case .breakTime:
-            self.counter = breakLength
+            resetBreakLength()
         case .longBreak:
-            self.counter = longBreakLength
+            resetLongBreakLength()
         case .paused:
-            self.counter = sessionLength
+            resetSessionLength()
         case .none:
+            resetSessionLength()
+        }
+    }
+    func resetSessionLength() {
+        if (session.mode == .active || session.mode == .none) {
             self.counter = sessionLength
+            self.curTimerLength = sessionLength
+        }
+    }
+    func resetBreakLength() {
+        if (session.mode == .breakTime) {
+            self.counter = breakLength
+            self.curTimerLength = breakLength
+        }
+    }
+    func resetLongBreakLength() {
+        if (session.mode == .longBreak) {
+            self.counter = longBreakLength
+            self.curTimerLength = longBreakLength
         }
     }
     func skip() {
