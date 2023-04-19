@@ -8,6 +8,7 @@
 // https://github.com/TimurKhay/MacSettings.git
 //
 
+#if os(macOS)
 import SwiftUI
 
 // MARK: - MacSettings
@@ -246,3 +247,5 @@ fileprivate extension CGFloat {
 fileprivate extension EdgeInsets {
     static let toolbarItemPadding: EdgeInsets = EdgeInsets(top: 6, leading: 6, bottom: 4, trailing: 6)
 }
+
+#endif

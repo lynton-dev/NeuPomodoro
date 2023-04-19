@@ -45,7 +45,7 @@ final class ChangeAppIconViewModel: ObservableObject {
     }
     
 
-    private func updateAppIcon(to icon: AppIcon) {
+    func updateAppIcon(to icon: AppIcon) {
         let previousAppIcon = selectedAppIcon
         selectedAppIcon = icon
 
@@ -85,6 +85,6 @@ func updateAppIconPreference() {
     #if os(macOS)
     NSApplication.shared.applicationIconImage = NSImage(named: (appIcon.iconName ?? AppIcon.primary.iconName) ?? "AppIcon")
     #else
-    ChangeAppIconViewModel().updateAppIcon(to: appIcon.iconName ?? AppIcon.primary.iconName)
+    ChangeAppIconViewModel().updateAppIcon(to: appIcon)
     #endif
 }

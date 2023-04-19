@@ -28,24 +28,24 @@ struct NeuPomodoroApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .toolbarBackground(.hidden, for: .navigationBar)
+                //.toolbarBackground(.hidden, for: .navigationBar)
         }
     }
 }
 
-//extension UINavigationBar {
-//    static func changeAppearance(clear: Bool) {
-//        let appearance = UINavigationBarAppearance()
-//
-//        if clear {
-//            appearance.configureWithTransparentBackground()
-//        } else {
-//            appearance.configureWithDefaultBackground()
-//        }
-//
-//        UINavigationBar.appearance().standardAppearance = appearance
-//        UINavigationBar.appearance().compactAppearance = appearance
-//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
-//    }
-//}
+extension UINavigationBar {
+    static func changeAppearance(clear: Bool) {
+        let appearance = UINavigationBarAppearance()
+
+        if clear {
+            appearance.configureWithTransparentBackground()
+        } else {
+            appearance.configureWithDefaultBackground()
+        }
+
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+    }
+}
 #endif

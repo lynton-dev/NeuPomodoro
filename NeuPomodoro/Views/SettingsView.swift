@@ -42,6 +42,7 @@ struct SettingsView: View {
     let themes = [Themes.system.description, Themes.light.description, Themes.dark.description]
     
     var body: some View {
+        #if os(macOS)
         ZStack {
             Color("Background")
                 .ignoresSafeArea()
@@ -59,7 +60,44 @@ struct SettingsView: View {
             }
         }
         .navigationTitle("Settings")
-        .presentedWindowToolbarStyle(.expanded)
+        
+        #else
+        
+        ZStack {
+            Color("Background")
+                .ignoresSafeArea()
+            
+            SettingsTabView(
+                tabBarPosition: .top,
+                content: [
+                    (
+                        tabText: "Sessions",
+                        tabIconName: "clock",
+                        view: AnyView(
+                            sessionsSettings
+                        )
+                    ),
+                    (
+                        tabText: "Appearance",
+                        tabIconName: "paintbrush",
+                        view: AnyView(
+                            appearanceSettings
+                        )
+                    ),
+                    (
+                        tabText: "About",
+                        tabIconName: "questionmark.circle",
+                        view: AnyView(
+                            aboutSettings
+                        )
+                    )
+                ]
+            )
+        }
+        .toolbarBackground(Color("Background"))
+        .navigationTitle("Settings")
+        
+        #endif
     }
     
     var sessionsSettings: some View {
@@ -134,8 +172,11 @@ struct SettingsView: View {
                     .padding(EdgeInsets(top: 3, leading: 5, bottom: 0, trailing: 0))
                 }
                 
+                #if os(macOS)
                 Spacer()
+                #endif
             }
+            .scrollContentBackground(.hidden)
             .padding(.top, 15)
         }
     }
@@ -152,26 +193,30 @@ struct SettingsView: View {
                     .onChange(of: themeIndex) { value in
                         updateAppIconPreference()
                     }
-                    .frame(maxWidth: 150)
+                    .frame(maxWidth: 175)
                 } label: {
                     Text("Theme:")
                 }
-
-                LabeledContent {
-                    Toggle("", isOn: $useDarkModeIcon)
-                        .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                        .opacity(((themeIndex == Themes.dark.index) || (themeIndex == Themes.system.index && colorScheme == .dark)) ? 1 : 0)
-                        .animation(.easeInOut, value: self.themeIndex)
-                        .onChange(of: useDarkModeIcon) { value in
-                            updateAppIconPreference()
-                        }
-                } label: {
-                    Text("Use dark icon:")
+                
+                if ((themeIndex == Themes.dark.index) || (themeIndex == Themes.system.index && colorScheme == .dark)) {
+                    LabeledContent {
+                        Toggle("", isOn: $useDarkModeIcon)
+                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                            .animation(.easeInOut, value: self.themeIndex)
+                            .onChange(of: useDarkModeIcon) { value in
+                                updateAppIconPreference()
+                            }
+                    } label: {
+                        Text("Use dark icon:")
+                    }
                 }
             }
 
+            #if os(macOS)
             Spacer()
+            #endif
         }
+        .scrollContentBackground(.hidden)
         .padding()
     }
     
@@ -185,8 +230,11 @@ struct SettingsView: View {
                 }
             }
 
+            #if os(macOS)
             Spacer()
+            #endif
         }
+        .scrollContentBackground(.hidden)
         .padding()
     }
 }
@@ -217,4 +265,3 @@ class SessionFormatter: NumberFormatter {
         return false
     }
 }
-
