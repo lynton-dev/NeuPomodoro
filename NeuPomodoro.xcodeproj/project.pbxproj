@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F24DF1C29F7846D000F4A90 /* EmailHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F24DF1B29F7846D000F4A90 /* EmailHelper.swift */; };
 		4F388CD029E9CC6A00D66D2E /* AppIconHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F388CCF29E9CC6A00D66D2E /* AppIconHelper.swift */; };
 		4F388CD229ECA49300D66D2E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F388CD129ECA49300D66D2E /* SettingsView.swift */; };
 		4F388CDC29EE57C300D66D2E /* MacSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F388CDB29EE57C300D66D2E /* MacSettings.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F24DF1B29F7846D000F4A90 /* EmailHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailHelper.swift; sourceTree = "<group>"; };
 		4F388CCF29E9CC6A00D66D2E /* AppIconHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppIconHelper.swift; sourceTree = "<group>"; };
 		4F388CD129ECA49300D66D2E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		4F388CDB29EE57C300D66D2E /* MacSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacSettings.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				4F388CCF29E9CC6A00D66D2E /* AppIconHelper.swift */,
 				4F537E4029E6585500D66410 /* Session.swift */,
 				4F388CDB29EE57C300D66D2E /* MacSettings.swift */,
+				4F24DF1B29F7846D000F4A90 /* EmailHelper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -201,6 +204,7 @@
 				4F537E4129E6585500D66410 /* Session.swift in Sources */,
 				4F4DEF3929E4B56B007B48BD /* NeuExtensions.swift in Sources */,
 				4F388CD029E9CC6A00D66D2E /* AppIconHelper.swift in Sources */,
+				4F24DF1C29F7846D000F4A90 /* EmailHelper.swift in Sources */,
 				4F4DEF3C29E4BD86007B48BD /* CountdownTimer.swift in Sources */,
 				4F388CD229ECA49300D66D2E /* SettingsView.swift in Sources */,
 				4F4DEF2129E4786E007B48BD /* ContentView.swift in Sources */,

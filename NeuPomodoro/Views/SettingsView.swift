@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 enum Themes: CustomStringConvertible, CaseIterable {
     case system, light, dark
@@ -29,6 +30,7 @@ enum Themes: CustomStringConvertible, CaseIterable {
 
 struct SettingsView: View {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.requestReview) var requestReview
     @ObservedObject var countdownTimer: CountdownTimer
     
     @AppStorage("useDarkModeIcon") var useDarkModeIcon = true
@@ -47,18 +49,25 @@ struct SettingsView: View {
             Color("Background")
                 .ignoresSafeArea()
             
-            MacSettings {
-                MacSettingsItem(title: "Sessions",
-                                image: "clock",
-                                content: sessionsSettings)
-                MacSettingsItem(title: "Appearance",
-                                image: "paintbrush",
-                                content: appearanceSettings)
-                MacSettingsItem(title: "About",
-                                image: "questionmark.circle",
-                                content: aboutSettings)
+            VStack {
+                
+                MacSettings {
+                    MacSettingsItem(title: "Sessions",
+                                    image: "clock",
+                                    content: sessionsSettings)
+                    MacSettingsItem(title: "Appearance",
+                                    image: "paintbrush",
+                                    content: appearanceSettings)
+                    MacSettingsItem(title: "About",
+                                    image: "exclamationmark.circle",
+                                    content: aboutSettings)
+                }
+                
+                Spacer()
+                
             }
         }
+        .zIndex(2)
         .navigationTitle("Settings")
         
         #else
@@ -86,7 +95,7 @@ struct SettingsView: View {
                     ),
                     (
                         tabText: "About",
-                        tabIconName: "questionmark.circle",
+                        tabIconName: "exclamationmark.circle",
                         view: AnyView(
                             aboutSettings
                         )
@@ -94,6 +103,7 @@ struct SettingsView: View {
                 ]
             )
         }
+        .zIndex(2)
         .toolbarBackground(Color("Background"))
         .navigationTitle("Settings")
         
@@ -170,6 +180,7 @@ struct SettingsView: View {
                         longBreakLength = SessionDefaults.DEFAULT_LONG_BREAK_SECS
                     })
                     .padding(EdgeInsets(top: 3, leading: 5, bottom: 0, trailing: 0))
+                    .help("Reset")
                 }
                 
                 #if os(macOS)
@@ -198,17 +209,15 @@ struct SettingsView: View {
                     Text("Theme:")
                 }
                 
-                if ((themeIndex == Themes.dark.index) || (themeIndex == Themes.system.index && colorScheme == .dark)) {
-                    LabeledContent {
-                        Toggle("", isOn: $useDarkModeIcon)
-                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
-                            .animation(.easeInOut, value: self.themeIndex)
-                            .onChange(of: useDarkModeIcon) { value in
-                                updateAppIconPreference()
-                            }
-                    } label: {
-                        Text("Use dark icon:")
-                    }
+                LabeledContent {
+                    Toggle("", isOn: $useDarkModeIcon)
+                        .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                        .animation(.easeInOut, value: self.themeIndex)
+                        .onChange(of: useDarkModeIcon) { value in
+                            updateAppIconPreference()
+                        }
+                } label: {
+                    Text("Use dark icon:")
                 }
             }
 
@@ -221,18 +230,62 @@ struct SettingsView: View {
     }
     
     var aboutSettings: some View {
-        Form {
-            Section {
-                LabeledContent {
-
-                } label: {
-                    Text("About")
-                }
-            }
-
+        VStack {
             #if os(macOS)
             Spacer()
             #endif
+            
+            HStack {
+                #if os(macOS)
+                Image(nsImage: NSImage(named: "AppIconDark") ?? NSImage())
+                    .resizable()
+                    .frame(width: 120, height: 120)
+                    .cornerRadius(20)
+                #else
+                Image(uiImage: UIImage(named: "AppIconDark") ?? UIImage())
+                    .resizable()
+                    .frame(width: 80, height: 80)
+                    .cornerRadius(20)
+                #endif
+                
+                VStack {
+                    Text("NeuPomodoro")
+                        .font(.title)
+                        .fontWeight(.bold)
+                    
+                    Text(getVersionNumber() + " (" + getBuildNumber() + ")")
+                        .font(.title3)
+                        .foregroundColor(.gray)
+                }
+
+            }
+            #if os(iOS)
+            .padding(.top, 50)
+            #endif
+            
+            Text("✨ Made by Lynton Schoeman ✨")
+                .padding()
+            
+            HStack {
+                Button("✉️ Contact") {
+                    EmailHelper.shared.sendEmail(to: "info@lynton.dev", subject: "Question about NeoPomodoro") { (worked) in
+                        if !worked { //if mail couldn't be presented
+                            print("Contact email couldn't be presented.")
+                        }
+                    }
+                }
+                .padding(.trailing, 5)
+                .help("Contact")
+                
+                Button("💬 Review") {
+                    requestReview()
+                }
+                .help("Review")
+            }
+            .padding(.bottom, 50)
+
+            Spacer()
+            
         }
         .scrollContentBackground(.hidden)
         .padding()
@@ -243,6 +296,20 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         SettingsView(countdownTimer: CountdownTimer())
     }
+}
+
+func getVersionNumber() -> String {
+    if let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+        return version
+    }
+    return ""
+}
+
+func getBuildNumber() -> String {
+    if let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String {
+        return build
+    }
+    return ""
 }
 
 class SessionFormatter: NumberFormatter {

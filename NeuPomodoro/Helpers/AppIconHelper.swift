@@ -78,7 +78,7 @@ func updateAppIconPreference() {
     let themeSetting = Themes.allCases[themeIndex]
     var appIcon = AppIcon.primary
     
-    if ((themeSetting == .system && useDarkModeIcon) || (themeSetting == .dark && useDarkModeIcon)) {
+    if (useDarkModeIcon) {
         appIcon = AppIcon.darkMode
     }
     
