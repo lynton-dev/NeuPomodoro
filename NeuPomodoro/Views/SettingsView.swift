@@ -39,6 +39,7 @@ struct SettingsView: View {
     @AppStorage("sessionLength") var sessionLength = SessionDefaults.DEFAULT_SESSION_LENGTH_SECS
     @AppStorage("breakLength") var breakLength = SessionDefaults.DEFAULT_BREAK_SECS
     @AppStorage("longBreakLength") var longBreakLength = SessionDefaults.DEFAULT_LONG_BREAK_SECS
+    @AppStorage("notificationsOn") var notificationsOn = SessionDefaults.DEFAULT_NOTIFICATIONS_ON
     
     @State var sessionsIndex = 0
     let themes = [Themes.system.description, Themes.light.description, Themes.dark.description]
@@ -114,6 +115,15 @@ struct SettingsView: View {
         VStack {
             Form {
                 Section {
+                    LabeledContent {
+                        Toggle("", isOn: $notificationsOn)
+                            .toggleStyle(SwitchToggleStyle(tint: .accentColor))
+                            .animation(.easeInOut, value: self.notificationsOn)
+                            .padding(.bottom, 20)
+                    } label: {
+                        Text("Session notifications:")
+                    }
+                    
                     LabeledContent {
                         Picker(selection: $sessionsIndex, label: Text("")) {
                             ForEach(0..<SessionDefaults.MAX_NUM_SESSIONS, id:\.self) { index in

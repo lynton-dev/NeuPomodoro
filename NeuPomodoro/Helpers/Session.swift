@@ -27,6 +27,7 @@ struct SessionDefaults {
     static let DEFAULT_SESSION_LENGTH_SECS = 25 * 60       // 25 mins
     static let DEFAULT_BREAK_SECS = 5 * 60          // 5 mins
     static let DEFAULT_LONG_BREAK_SECS = 15 * 60    // 15 mins
+    static let DEFAULT_NOTIFICATIONS_ON = true
 }
 
 class Session {
@@ -37,6 +38,7 @@ class Session {
     @AppStorage("numSessions") var numSessions = SessionDefaults.DEFAULT_NUM_SESSIONS
     @AppStorage("breakLength") var breakLength = SessionDefaults.DEFAULT_BREAK_SECS
     @AppStorage("longBreakLength") var longBreakLength = SessionDefaults.DEFAULT_LONG_BREAK_SECS
+    @AppStorage("notificationsOn") var notificationsOn = SessionDefaults.DEFAULT_NOTIFICATIONS_ON
     var curSession = 1
     
     func updateSessionUI() {

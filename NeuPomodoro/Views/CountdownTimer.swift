@@ -25,6 +25,7 @@ class CountdownTimer: ObservableObject {
     @AppStorage("sessionLength") var sessionLength = SessionDefaults.DEFAULT_SESSION_LENGTH_SECS
     @AppStorage("breakLength") var breakLength = SessionDefaults.DEFAULT_BREAK_SECS
     @AppStorage("longBreakLength") var longBreakLength = SessionDefaults.DEFAULT_LONG_BREAK_SECS
+    @AppStorage("notificationsOn") var notificationsOn = SessionDefaults.DEFAULT_NOTIFICATIONS_ON
     @Published var counter: Int = SessionDefaults.DEFAULT_SESSION_LENGTH_SECS
     @Published var session = Session()
     @Published var running = false
@@ -72,6 +73,10 @@ class CountdownTimer: ObservableObject {
         }
     }
     func notify() {
+        if(!self.notificationsOn) {
+            return
+        }
+        
         let content = UNMutableNotificationContent()
         var doNotify = true
         

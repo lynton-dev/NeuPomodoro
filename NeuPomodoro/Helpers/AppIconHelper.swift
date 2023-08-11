@@ -73,9 +73,7 @@ final class ChangeAppIconViewModel: ObservableObject {
 func updateAppIconPreference() {
     @Environment(\.colorScheme) var colorScheme
     @AppStorage("useDarkModeIcon") var useDarkModeIcon = true
-    @AppStorage("themeIndex") var themeIndex = Themes.system.index
-    
-    let themeSetting = Themes.allCases[themeIndex]
+
     var appIcon = AppIcon.primary
     
     if (useDarkModeIcon) {
